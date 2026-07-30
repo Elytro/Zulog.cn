@@ -1,1 +1,956 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>兰山区火山云计算中心</title>
+    <link href="https://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* ============ 全局 & 工具类 ============ */
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Helvetica Neue", "Microsoft YaHei", "PingFang SC", sans-serif;
+            color: #2c2f2a;
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { transition: all 0.25s ease; }
+        :target::before {
+            content: "";
+            display: block;
+            height: 70px;
+            margin-top: -70px;
+        }
 
+        /* ============ 导航栏 ============ */
+        .navbar-qcode {
+            background: #fff;
+            border: none;
+            border-bottom: 2px solid #f1f3ef;
+            border-radius: 0;
+            margin-bottom: 0;
+            padding: 8px 0;
+        }
+        .navbar-qcode .navbar-brand {
+            font-size: 26px;
+            font-weight: 700;
+            color: #68c11a !important;
+            letter-spacing: -1px;
+        }
+        .navbar-qcode .navbar-brand span { color: #71786b; font-weight: 400; }
+        .navbar-qcode .navbar-nav > li > a {
+            font-size: 14px;
+            color: #525a4c;
+            padding: 12px 18px;
+            font-weight: 500;
+        }
+        .navbar-qcode .navbar-nav > li > a:hover,
+        .navbar-qcode .navbar-nav > li > a:focus,
+        .navbar-qcode .navbar-nav > li > a.active {
+            color: #68c11a;
+            background: transparent;
+        }
+        .navbar-qcode .navbar-toggle { border-color: #dddddd; }
+        .navbar-qcode .navbar-toggle .icon-bar { background: #68c11a; }
+
+        /* ============ 域名通知条 ============ */
+        .domain-notice {
+            background: linear-gradient(135deg, #68c11a 0%, #559122 100%);
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        .domain-notice a {
+            color: #cefca6;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+        .domain-notice a:hover { color: #fff; text-decoration: none; }
+
+        /* ============ Hero 区域 ============ */
+        .hero {
+            background: linear-gradient(160deg, #e9fed7 0%, #dffac6 40%, #cefca6 100%);
+            text-align: center;
+            padding: 80px 0 70px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: -60px; right: -80px;
+            width: 360px; height: 360px;
+            background: radial-gradient(circle, rgba(104,193,26,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            bottom: -40px; left: -60px;
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(104,193,26,0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero .container { position: relative; z-index: 1; }
+        .badge-tip {
+            display: inline-block;
+            background: rgba(104,193,26,0.1);
+            color: #68c11a;
+            border: 1px solid rgba(104,193,26,0.2);
+            border-radius: 20px;
+            padding: 6px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #181c15;
+            margin: 0 0 14px;
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: #68c11a;
+        }
+        .hero .subtitle {
+            font-size: 17px;
+            color: #71786b;
+            margin-bottom: 30px;
+        }
+        .btn-hero {
+            display: inline-block;
+            background: #68c11a;
+            color: #fff;
+            padding: 12px 36px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: all 0.25s;
+        }
+        .btn-hero:hover {
+            background: #559122;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(104,193,26,0.3);
+        }
+        .btn-hero-outline {
+            display: inline-block;
+            background: transparent;
+            color: #68c11a;
+            border: 2px solid #68c11a;
+            padding: 10px 34px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: all 0.25s;
+        }
+        .btn-hero-outline:hover {
+            background: #68c11a;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* ============ 通用区块标题 ============ */
+        .section {
+            padding: 70px 0;
+        }
+        .section-bg {
+            background: #f9f9f8;
+        }
+        .title-center {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+        .title-center h2 {
+            font-size: 30px;
+            font-weight: 700;
+            color: #181c15;
+            margin: 0 0 10px;
+        }
+        .title-center p {
+            font-size: 15px;
+            color: #a2a79d;
+            margin-top: 8px;
+        }
+        .line {
+            width: 50px;
+            height: 3px;
+            background: #68c11a;
+            border-radius: 2px;
+            margin: 0 auto;
+        }
+
+        /* ============ 关于我们 ============ */
+        .about-text {
+            max-width: 780px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .about-text p {
+            font-size: 15px;
+            line-height: 1.9;
+            color: #525a4c;
+            margin-bottom: 14px;
+        }
+        .about-text strong { color: #68c11a; }
+
+        /* ============ 品牌价值 ============ */
+        .value-card {
+            text-align: center;
+            padding: 30px 20px 24px;
+            background: #fff;
+            border: 1px solid #e5e8e3;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+        .value-card:hover {
+            border-color: #cefca6;
+            box-shadow: 0 6px 20px rgba(104,193,26,0.08);
+            transform: translateY(-3px);
+        }
+        .value-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e9fed7 0%, #dffac6 100%);
+            margin-bottom: 16px;
+            font-size: 26px;
+            color: #68c11a;
+        }
+        .value-card h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #181c15;
+            margin: 0 0 10px;
+        }
+        .value-card p {
+            font-size: 13px;
+            color: #71786b;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ============ 服务卡片 ============ */
+        .service-card {
+            text-align: center;
+            padding: 30px 18px 22px;
+            background: #fff;
+            border: 1px solid #e5e8e3;
+            border-radius: 8px;
+            margin-bottom: 22px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #68c11a, #85f127);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover {
+            border-color: #cefca6;
+            box-shadow: 0 6px 22px rgba(104,193,26,0.08);
+            transform: translateY(-3px);
+        }
+        .s-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            background: #e9fed7;
+            font-size: 24px;
+            color: #68c11a;
+            margin-bottom: 14px;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover .s-icon {
+            background: #68c11a;
+            color: #fff;
+        }
+        .service-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #181c15;
+            margin: 0 0 8px;
+        }
+        .service-card p {
+            font-size: 13px;
+            color: #71786b;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ============ 案例展示 ============ */
+        .case-item {
+            text-align: center;
+            padding: 30px 16px 22px;
+            background: #fff;
+            border: 1px solid #e5e8e3;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .case-item:hover {
+            border-color: #cefca6;
+            box-shadow: 0 6px 20px rgba(104,193,26,0.08);
+            transform: translateY(-3px);
+        }
+        .case-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #e9fed7;
+            font-size: 22px;
+            color: #68c11a;
+            margin-bottom: 12px;
+        }
+        .case-item h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #181c15;
+            margin: 0 0 8px;
+        }
+        .case-tag {
+            display: inline-block;
+            background: #f3f4f3;
+            color: #71786b;
+            border-radius: 4px;
+            padding: 4px 14px;
+            font-size: 12px;
+        }
+
+        /* ============ 页脚 ============ */
+        .footer {
+            background: #181c15;
+            color: #d3d6d1;
+        }
+        .footer-main {
+            padding: 50px 0 30px;
+        }
+        .footer-brand {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+        .footer-brand span { color: #85f127; }
+        .footer-desc {
+            font-size: 13px;
+            color: #a2a79d;
+            line-height: 1.8;
+            margin-bottom: 6px;
+        }
+        .footer-main h5 {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            margin-top: 4px;
+        }
+        .footer-main ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-main ul li { margin-bottom: 8px; }
+        .footer-main ul li a {
+            color: #a2a79d;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .footer-main ul li a:hover { color: #85f127; }
+        .footer-contact p {
+            font-size: 13px;
+            color: #a2a79d;
+            margin-bottom: 6px;
+        }
+        .footer-contact i { margin-right: 6px; color: #85f127; width: 14px; text-align: center; }
+
+        .footer-bottom {
+            border-top: 1px solid #272e21;
+            padding: 18px 0;
+            font-size: 12px;
+            color: #71786b;
+            text-align: center;
+        }
+        .footer-bottom a {
+            color: #a2a79d;
+            text-decoration: none;
+        }
+        .footer-bottom a:hover { color: #85f127; }
+        .footer-bottom .divider {
+            margin: 0 8px;
+            color: #404939;
+        }
+        .filing-row { margin-top: 8px; }
+        .filing-row img {
+            display: inline-block;
+            vertical-align: -2px;
+            margin-right: 2px;
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ============ 登录弹窗 ============ */
+        .modal-login .modal-content {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        .modal-login .modal-header {
+            background: linear-gradient(135deg, #68c11a 0%, #559122 100%);
+            color: #fff;
+            padding: 28px 30px 24px;
+            border-bottom: none;
+            text-align: center;
+        }
+        .modal-login .modal-header h4 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .modal-login .modal-header p {
+            margin: 6px 0 0;
+            font-size: 12px;
+            opacity: 0.85;
+        }
+        .modal-login .modal-header .close {
+            color: #fff;
+            opacity: 0.7;
+            font-size: 22px;
+            margin-top: -18px;
+            text-shadow: none;
+        }
+        .modal-login .modal-header .close:hover { opacity: 1; }
+        .modal-login .modal-body {
+            padding: 30px 30px 20px;
+        }
+        .modal-login .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .modal-login .form-group label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #404939;
+            margin-bottom: 6px;
+        }
+        .modal-login .input-icon-wrap {
+            position: relative;
+        }
+        .modal-login .input-icon-wrap .fa {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a2a79d;
+            font-size: 14px;
+            z-index: 2;
+        }
+        .modal-login .input-icon-wrap .form-control {
+            padding-left: 36px;
+            height: 44px;
+            border-radius: 6px;
+            border: 1px solid #d3d6d1;
+            font-size: 14px;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+        .modal-login .form-control:focus {
+            border-color: #68c11a;
+            box-shadow: 0 0 0 3px rgba(104,193,26,0.12);
+        }
+        .modal-login .form-extra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            font-size: 13px;
+        }
+        .modal-login .form-extra label {
+            font-weight: 400;
+            color: #71786b;
+            cursor: pointer;
+            margin: 0;
+        }
+        .modal-login .form-extra a {
+            color: #68c11a;
+            text-decoration: none;
+        }
+        .modal-login .form-extra a:hover { text-decoration: underline; }
+        .modal-login .btn-login {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #68c11a 0%, #559122 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 11px 0;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.25s;
+        }
+        .modal-login .btn-login:hover {
+            background: linear-gradient(135deg, #559122 0%, #68c11a 100%);
+            box-shadow: 0 4px 16px rgba(104,193,26,0.35);
+        }
+        .modal-login .modal-footer {
+            text-align: center;
+            padding: 8px 30px 24px;
+            border-top: none;
+            font-size: 13px;
+            color: #71786b;
+        }
+        .modal-login .modal-footer a {
+            color: #68c11a;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .modal-login .modal-footer a:hover { text-decoration: underline; }
+
+        /* ============ 响应式微调 ============ */
+        @media (max-width: 767px) {
+            .hero { padding: 50px 0 45px; }
+            .hero h1 { font-size: 28px; }
+            .hero .subtitle { font-size: 15px; }
+            .btn-hero, .btn-hero-outline { display: block; margin: 6px auto; width: 80%; }
+            .section { padding: 45px 0; }
+            .title-center h2 { font-size: 24px; }
+            .navbar-qcode .navbar-nav {
+                margin: 0 -15px;
+                background: #fff;
+            }
+        }
+        @media (min-width: 768px) and (max-width: 991px) {
+            .hero h1 { font-size: 34px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 导航 ==================== -->
+    <nav class="navbar navbar-qcode navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="sr-only">导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Zulog<span>.cn</span></a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#about" class="active">关于</a></li>
+                    <li><a href="#values">业务</a></li>
+                    <li><a href="#services">服务</a></li>
+                    <li><a href="#cases">案例</a></li>
+                    <li><a href="javascript:;" data-toggle="modal" data-target="#loginModal">登录</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== 域名业务说明 ==================== -->
+    <div class="domain-notice" style="margin-top: 70px;">
+        <div class="container">
+            您正在访问的是 Zulog.cn 业务域名。承载火山云计算平台用户生成的内容数据交互。
+            <a href="https://www.zulog.com/">了解更多 &raquo;</a>
+        </div>
+    </div>
+
+    <!-- ==================== Hero / 企业名片 ==================== -->
+    <section class="hero">
+        <div class="container">
+            <div class="badge-tip">极简 · 专业 · 信赖</div>
+            <h1>兰山区 <em>火山云计算</em> 服务中心</h1>
+            <p class="subtitle">
+                网站建设 · 品牌策划 · 移动应用 · 二维码解决方案
+            </p>
+            <div>
+                <a href="#services" class="btn-hero">查看服务</a>
+                <a href="javascript:;" class="btn-hero-outline" data-toggle="modal" data-target="#loginModal">登录控制台</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 关于我们 ==================== -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="title-center">
+                <h2>关于我们</h2>
+                <div class="line"></div>
+            </div>
+            <div class="about-text">
+                <p>
+                    <strong>火山云计算</strong> 成立于2023年，是一家专注于二维码技术研发与应用的互联网科技公司。
+                </p>
+                <p>
+                    公司主要经营范围包括：<strong>二维码技术服务、网站建设、移动应用开发、
+                    云计算服务、品牌策划、广告设计与发布</strong>等。
+                </p>
+                <p>
+                    我们始终坚持"极简 · 专业 · 信赖"的服务理念，致力于为每一位客户
+                    提供高品质、一站式的数字化解决方案。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 品牌价值 ==================== -->
+    <section id="values" class="section section-bg">
+        <div class="container">
+            <div class="title-center">
+                <h2>品牌价值</h2>
+                <div class="line"></div>
+                <p>驱动我们前进的核心信念</p>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fa fa-diamond"></i></div>
+                        <h4>极简</h4>
+                        <p>化繁为简，让二维码技术的使用变得直观、高效、零门槛</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fa fa-shield"></i></div>
+                        <h4>专业</h4>
+                        <p>深耕技术领域，用前沿技术和严谨态度打磨每一款产品</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fa fa-handshake-o"></i></div>
+                        <h4>信赖</h4>
+                        <p>以客户成功为己任，建立长期稳定的合作伙伴关系</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fa fa-rocket"></i></div>
+                        <h4>创新</h4>
+                        <p>持续探索数字化前沿，为企业提供面向未来的解决方案</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 服务项目 ==================== -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="title-center">
+                <h2>服务项目</h2>
+                <div class="line"></div>
+                <p>一站式数字化服务</p>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="service-card">
+                        <div class="s-icon"><i class="fa fa-qrcode"></i></div>
+                        <h4>二维码服务</h4>
+                        <p>活码生成、批量管理、数据追踪、美化排版一站式服务</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="service-card">
+                        <div class="s-icon"><i class="fa fa-laptop"></i></div>
+                        <h4>网站建设</h4>
+                        <p>企业官网、响应式门户、电商平台定制开发</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="service-card">
+                        <div class="s-icon"><i class="fa fa-mobile"></i></div>
+                        <h4>移动应用</h4>
+                        <p>微信小程序、H5应用、移动端管理系统开发</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="service-card">
+                        <div class="s-icon"><i class="fa fa-cloud"></i></div>
+                        <h4>云计算服务</h4>
+                        <p>云服务器部署、数据存储、安全防护与运维支持</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="service-card">
+                        <div class="s-icon"><i class="fa fa-pie-chart"></i></div>
+                        <h4>品牌策划</h4>
+                        <p>品牌定位、VI 设计、营销策略与全案推广</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="service-card">
+                        <div class="s-icon"><i class="fa fa-bullhorn"></i></div>
+                        <h4>广告制作</h4>
+                        <p>创意设计、广告投放、效果监测与优化</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="service-card">
+                        <div class="s-icon"><i class="fa fa-paper-plane-o"></i></div>
+                        <h4>广告发布</h4>
+                        <p>多渠道广告分发、精准投放与数据回传</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="service-card">
+                        <div class="s-icon"><i class="fa fa-cogs"></i></div>
+                        <h4>定制开发</h4>
+                        <p>根据业务场景深度定制，灵活的二次开发支持</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 案例展示 ==================== -->
+    <section id="cases" class="section section-bg">
+        <div class="container">
+            <div class="title-center">
+                <h2>案例展示</h2>
+                <div class="line"></div>
+                <p>部分合作案例</p>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="case-item">
+                        <div class="case-icon"><i class="fa fa-wechat"></i></div>
+                        <h4>微信小程序</h4>
+                        <div class="case-tag">智慧门店管理系统</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="case-item">
+                        <div class="case-icon"><i class="fa fa-users"></i></div>
+                        <h4>企业微信群</h4>
+                        <div class="case-tag">客户私域流量运营方案</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="case-item">
+                        <div class="case-icon"><i class="fa fa-building-o"></i></div>
+                        <h4>企业官网</h4>
+                        <div class="case-tag">多行业品牌官网建设</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="case-item">
+                        <div class="case-icon"><i class="fa fa-qrcode"></i></div>
+                        <h4>二维码平台</h4>
+                        <div class="case-tag">设备巡检 & 资产管理</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="case-item">
+                        <div class="case-icon"><i class="fa fa-shopping-cart"></i></div>
+                        <h4>电商平台</h4>
+                        <div class="case-tag">B2C 商城定制开发</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="case-item">
+                        <div class="case-icon"><i class="fa fa-cloud-upload"></i></div>
+                        <h4>云服务平台</h4>
+                        <div class="case-tag">SaaS 产品架构与部署</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 页脚 ==================== -->
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="container">
+                <div class="row">
+                    <!-- 品牌 -->
+                    <div class="col-sm-6 col-md-4">
+                        <div class="footer-brand">Zulog<span>.cn</span></div>
+                        <p class="footer-desc">
+                            专注于二维码技术研发与应用<br>
+                            为企业提供一站式数字化解决方案
+                        </p>
+                        <p class="footer-desc">极简 · 专业 · 信赖</p>
+                    </div>
+                    <!-- 快速链接 -->
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <h5>服务项目</h5>
+                        <ul>
+                            <li><a href="#services">二维码服务</a></li>
+                            <li><a href="#services">网站建设</a></li>
+                            <li><a href="#services">移动应用</a></li>
+                            <li><a href="#services">云计算服务</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <h5>案例与支持</h5>
+                        <ul>
+                            <li><a href="#cases">案例展示</a></li>
+                            <li><a href="javascript:;">帮助中心</a></li>
+                            <li><a href="javascript:;">开发文档</a></li>
+                            <li><a href="javascript:;">意见反馈</a></li>
+                        </ul>
+                    </div>
+                    <!-- 联系方式 -->
+                    <div class="col-sm-6 col-md-4">
+                        <h5>联系我们</h5>
+                        <div class="footer-contact">
+                            <p><i class="fa fa-envelope-o"></i> service@zulog.com</p>
+                            <p><i class="fa fa-phone"></i> 0539-8703700</p>
+                            <p><i class="fa fa-map-marker"></i> 山东省临沂市兰山区顺河母婴采购基地</p>
+                            <p style="margin-top:10px;font-size:12px;color:#71786b;">
+                                周一至周五 09:00 - 18:00
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 底部栏 -->
+        <div class="footer-bottom">
+            <div class="container">
+                Copyright &copy; 2026 &nbsp; <a href="https://www.zulog.cn" target="_blank">兰山区火山云计算中心</a> 版权所有
+                <br class="visible-xs">
+              
+                <div class="filing-row">
+                    <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">
+                        鲁ICP备2024092961号-16
+                    </a>
+                    <span class="divider">|</span>
+                    <a href="http://www.beian.gov.cn/" target="_blank" rel="nofollow">
+                        
+                        鲁公网安备 37130202372369号
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== 登录弹窗 ==================== -->
+    <div class="modal fade modal-login" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="loginModalLabel">登录 Qcode</h4>
+                    <p>欢迎回来，请登录您的账户</p>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">邮箱地址</label>
+                            <div class="input-icon-wrap">
+                                <i class="fa fa-envelope-o"></i>
+                                <input type="email" class="form-control" id="loginEmail"
+                                       placeholder="请输入邮箱" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">登录密码</label>
+                            <div class="input-icon-wrap">
+                                <i class="fa fa-lock"></i>
+                                <input type="password" class="form-control" id="loginPassword"
+                                       placeholder="请输入密码" required>
+                            </div>
+                        </div>
+                        <div class="form-extra">
+                            <label>
+                                <input type="checkbox" id="rememberMe"> 记住我
+                            </label>
+                            <a href="javascript:;">忘记密码？</a>
+                        </div>
+                        <button type="submit" class="btn btn-login">
+                            <i class="fa fa-sign-in"></i>&nbsp; 登 录
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    还没有账户？<a href="javascript:;">立即注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+        // 导航栏滚动高亮 + 折叠菜单点击关闭
+        $(function () {
+            var $sections = $('section[id]');
+            var $navLinks = $('#navbar-main a[href^="#"]');
+
+            $(window).on('scroll', function () {
+                var scrollPos = $(document).scrollTop() + 100;
+                $sections.each(function () {
+                    var top = $(this).offset().top;
+                    var bottom = top + $(this).outerHeight();
+                    var id = $(this).attr('id');
+                    if (scrollPos >= top && scrollPos < bottom) {
+                        $navLinks.removeClass('active');
+                        $('#navbar-main a[href="#' + id + '"]').addClass('active');
+                    }
+                });
+            });
+
+            // 移动端点击导航项后收起菜单
+            $('#navbar-main a').on('click', function () {
+                if ($(window).width() < 768) {
+                    $('#navbar-main').collapse('hide');
+                }
+            });
+
+            // 登录表单提交
+            $('#loginForm').on('submit', function (e) {
+                e.preventDefault();
+                var email = $('#loginEmail').val().trim();
+                if (!email) {
+                    alert('请输入邮箱地址');
+                    return;
+                }
+                if (!$('#loginPassword').val()) {
+                    alert('请输入密码');
+                    return;
+                }
+                alert('登录成功（演示模式）');
+                $('#loginModal').modal('hide');
+            });
+        });
+    </script>
+
+</body>
+</html>
